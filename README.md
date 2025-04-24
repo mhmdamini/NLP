@@ -1,5 +1,3 @@
-Here's a draft `README.md` tailored for your GitHub repository, based on the uploaded files and project description from your paper:
-
 ---
 
 # Morphological MCQ Generation for Grades 3–5

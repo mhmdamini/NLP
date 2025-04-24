@@ -126,7 +126,14 @@ If you use this codebase in your research, please cite the paper:
   organization={University of Florida}
 }
 ```
-
 ---
 
-Let me know if you'd like this exported as a `.md` file or embedded into your repo directly.
+## 📬 Contact
+
+For questions, feedback, or collaboration inquiries, please contact:
+
+- **Mohammad Amini** – m.amini@ufl.edu  
+- **Babak Ahmadi** – babak.ahmadi@ufl.edu  
+- Department of Industrial & Systems Engineering, University of Florida
+
+---

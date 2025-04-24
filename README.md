@@ -68,7 +68,7 @@ These strategies are abstracted in `gpt.py` and `gemma.py`.
 
 ## 📈 Evaluation Metrics
 
-Implemented in `auto_veal.py`:
+Implemented in `auto_eval.py`:
 
 - **Grammar**: LanguageTool error density
 - **Complexity**: Syntax tree depth, word variety
@@ -235,3 +235,5 @@ For questions, feedback, or collaboration inquiries, please contact:
 - Department of Industrial & Systems Engineering, University of Florida
 
 ---
+
+💡 If it’s more convenient for you to work in notebooks, we’ve also provided interactive `.ipynb` versions of key scripts in the `IPNYB` folder.

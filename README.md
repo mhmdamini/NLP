@@ -29,11 +29,9 @@ This project aims to reduce manual effort in test creation by leveraging languag
 ├── gpt.py                   # Prompting strategies using GPT-3.5
 ├── gemma.py                # Prompting strategies using fine-tuned Gemma model
 ├── fine_tuning_gemma.py    # Training pipeline for Gemma model using LoRA adapters
-├── auto_veal.py            # Automatic evaluation: grammar, complexity, readability, and fluency
-├── Final_Auto_Eval.ipynb   # Notebook for evaluating generated items (GPT-based)
-├── Untitled1.ipynb         # Additional experimental notebook (in development)
-├── Untitled.ipynb          # Additional experimental notebook (in development)
-└── CAI6307_Team_10_EduGen_Innovators.pdf  # Project paper
+├── auto_eval.py            # Automatic evaluation: grammar, complexity, readability, and fluency
+├── parser_for_human_expert_evals.py      # Parses human expert docx annotations into CSV format
+└── expert-based_evaluations_by_gpt41.py  # GPT-4.1 based structured scoring of questions
 ```
 
 ---
@@ -80,6 +78,107 @@ Implemented in `auto_veal.py`:
 Each item receives a composite quality score based on these metrics.
 
 ---
+
+
+## 📄 File Descriptions
+
+### `gpt.py`
+**Purpose:**  
+Implements prompting strategies using **OpenAI’s GPT-3.5 or GPT-4** models for generating morphologically-aware multiple-choice questions (MCQs).
+
+**Key Features:**
+- Supports **13 morphological question types**, such as identifying prefixes, suffixes, root words, and transformations.
+- Implements five prompting strategies:
+  - Zero-shot
+  - Few-shot (with real examples)
+  - Chain-of-thought (CoT)
+  - CoT + Sequential Reasoning
+  - CoT + Multi-role (Teacher → Student → Psychometrician)
+- Handles word difficulty, task difficulty, and reuse prevention (e.g., "forbidden word list").
+
+### `gemma.py`
+**Purpose:**  
+Provides an inference interface for a **fine-tuned Gemma model**, replicating the logic in `gpt.py` but using a local (LoRA-adapted) model rather than the OpenAI API.
+
+**Key Features:**
+- Uses Hugging Face's `transformers` and `peft` for model loading and prompt generation.
+- All five prompting strategies from `gpt.py` are replicated.
+- Adds a `generate_gpt()` wrapper that interfaces with the local Gemma model instead of OpenAI's API.
+- Requires a valid `HF_TOKEN` and access to a pre-fine-tuned model.
+
+### `fine_tuning_gemma.py`
+**Purpose:**  
+Handles **data preparation, augmentation, training, and saving** for fine-tuning the Gemma 2B model on your morphological dataset.
+
+**Key Features:**
+- Custom `MorphologyDataset` class for formatting question data (both MCQ and open-ended).
+- Augments input data with phrasing variations to improve generalization.
+- Uses Hugging Face's `Trainer` and `LoRA` adapters for memory-efficient training.
+- Includes GPU monitoring, stratified data splitting, and model-saving logic.
+
+### `auto_eval.py`
+**Purpose:**  
+Performs **automatic evaluation** of generated questions using standard NLP metrics. This helps identify the quality of LLM outputs across multiple dimensions.
+
+**Evaluated Dimensions:**
+- **Grammar Quality** – via LanguageTool (error density)
+- **Syntactic Complexity** – using spaCy parse trees and POS distributions
+- **Readability** – via Flesch Reading Ease and Gunning Fog Index
+- **Fluency** – using GPT-2 perplexity as a proxy
+
+**Pipeline:**
+- Input: Excel file of generated questions
+- Output: Annotated Excel file with quality scores and detailed error messages
+
+---
+
+### 📄 `expert-based_evaluations_by_gpt41.py`
+
+**Purpose:**  
+This script simulates expert evaluation of generated multiple-choice questions by leveraging **GPT-4.1** in a structured, rubric-based fashion.
+
+**What it does:**
+- Takes a CSV of auto-generated questions (e.g., from GPT-3.5 or Gemma).
+- For each question, GPT-4.1 is prompted to evaluate the item across **five specific educational criteria**, modeled after human review:
+  1. **Clarity of Instruction**
+  2. **Accuracy of the Correct Answer**
+  3. **Quality of Distractors**
+  4. **Appropriateness of Word Difficulty**
+  5. **Alignment with Task Difficulty**
+- GPT responds in **structured JSON format**, including both binary scores (0 or 1) and explanations.
+- The scores and rationale are saved to a CSV for analysis.
+
+**How it's used:**
+- Replace `ITEM_FILE` with the path to your generated questions.
+- Ensure corresponding human evaluation examples exist (loaded from `HUMAN_FILE`) to prime GPT.
+- Run the async `main()` loop to score all items in parallel.
+
+**Benefits:**
+- Automates expert-level review at scale.
+- Ensures interpretability via rationale for each score.
+
+---
+
+### 📄 `parser_for_human_expert_evals.py`
+
+**Purpose:**  
+Parses human evaluations stored in a `.docx` file and converts them into a structured CSV format usable by other tools (e.g., as priming examples in `expert-based_evaluations_by_gpt41.py`).
+
+**What it does:**
+- Reads `Human Evaluation Metrics.docx`, where each section includes:
+  - A sample question (with choices, correct answer)
+  - Morphological difficulty tags
+  - Human-assigned scores (0/1) for each of the 5 evaluation metrics
+  - Justifying explanations for each score
+- Extracts each item using regular expressions.
+- Converts the result into `mcq_human_evals.csv`.
+
+**Why it's important:**
+- Provides a high-quality, human-labeled set of examples that teach GPT how to evaluate items realistically.
+- Forms the foundation for **few-shot priming** inside the GPT-4.1-based rubric evaluator.
+
+---
+
 
 ## 🔁 Model Training
 

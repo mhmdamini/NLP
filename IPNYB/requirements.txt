@@ -1,0 +1,13 @@
+huggingface_hub
+language-tool-python
+nltk
+numpy
+openai
+pandas
+peft
+python-docx
+scikit-learn
+spacy
+torch
+tqdm
+transformers

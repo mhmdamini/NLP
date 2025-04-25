@@ -7,7 +7,7 @@ import re
 ###############################################################################
 #0. API Key
 ###############################################################################
-openai.api_key = "sk-proj-PSXJ5xydTMPUZcHkLIuq5oGnh"
+openai.api_key = "sk-proj-PSXJ5xydTMPUZcHkLIuq5oGnh" #This is a fake api_key and it should be replace with real api_key
 
 ###############################################################################
 # 1. Configure OpenAI

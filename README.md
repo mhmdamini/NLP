@@ -194,7 +194,7 @@ The `Results/` folder contains the evaluation outputs of both **automated metric
 | **gpt_41_mini_evaluations_of_gemma.xlsx** | Evaluation of **Gemma-generated questions** by GPT-4.1 based on a human-like rubric. |
 | **gpt_41_mini_evaluations_of_gpt_35.xlsx**| Evaluation of **GPT-3.5-generated questions** by GPT-4.1 based on a human-like rubric. |
 
-### 🔍 Evaluation Criteria
+### 🔍 Automatic Evaluation Criteria
 
 **Auto Evaluation Scores** (in `Gemma_Results.xlsx` and `Results_GPT.xlsx`) include:
 - **Grammar**: Error density using [LanguageTool](https://languagetool.org)

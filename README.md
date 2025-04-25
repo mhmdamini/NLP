@@ -31,7 +31,7 @@ This project aims to reduce manual effort in test creation by leveraging languag
 ├── fine_tuning_gemma.py                  # Training pipeline for Gemma model using LoRA adapters
 ├── auto_eval.py                          # Automatic evaluation: grammar, complexity, readability, and fluency
 ├── parser_for_human_expert_evals.py      # Parses human expert docx annotations into CSV format
-├── IPNYB/                                #  Jupyter notebooks files
+├── IPYNB/                                #  Jupyter notebooks files
 ├── results/                              # Output files from evaluation scripts in Excel format
 └── expert-based_evaluations_by_gpt41.py  # GPT-4.1 based structured scoring of questions
 ```
@@ -269,4 +269,4 @@ For questions, feedback, or collaboration inquiries, please contact:
 
 ---
 
-💡 If it’s more convenient for you to work in notebooks, we’ve also provided interactive `.ipynb` versions of key scripts in the `IPNYB` folder.
+💡 If it’s more convenient for you to work in notebooks, we’ve also provided interactive `.ipynb` versions of key scripts in the `IPYNB` folder.
